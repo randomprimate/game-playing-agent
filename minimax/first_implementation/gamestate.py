@@ -1,7 +1,18 @@
+from copy import deepcopy
+
+rows = 2
+columns = 3
+
+xlim, ylim = 3, 2  # board dimensions
+
+
 class GameState:
 
     def __init__(self):
-        pass
+        self._board = [[0 for x in range(rows)] for y in range(columns)]
+        self._board[-1][-1] = 1
+        self._parity = 0
+        self._player_locations = [None, None]
 
     def forecast_move(self, move):
         """ Return a new board object with the specified move
@@ -26,3 +37,10 @@ class GameState:
         the zero-indexed coordinates on the board.
         """
         pass
+
+    def _get_blank_spaces(self):
+        """ Return a list of blank spaces on the board."""
+        return [(x, y) for y in range(ylim) for x in range(xlim)
+                if self._board[x][y] == 0]
+
+#import code; code.interact(local=dict(globals(), **locals()))

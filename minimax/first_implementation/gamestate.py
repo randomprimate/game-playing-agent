@@ -3,9 +3,6 @@ from copy import deepcopy
 rows = 2
 columns = 3
 
-xlim, ylim = 3, 2  # board dimensions
-
-
 class GameState:
 
     def __init__(self):
@@ -38,9 +35,8 @@ class GameState:
         """
         pass
 
-    def _get_blank_spaces(self):
-        """ Return a list of blank spaces on the board."""
-        return [(x, y) for y in range(ylim) for x in range(xlim)
-                if self._board[x][y] == 0]
+    def get_empty_spaces(self):
+        """Returns a list with the indices of 0 values as coordinates."""
+        return [(x, y) for y in range(rows) for x in range(columns) if self._board[x][y] == 0]
 
-#import code; code.interact(local=dict(globals(), **locals()))
+import code; code.interact(local=dict(globals(), **locals()))

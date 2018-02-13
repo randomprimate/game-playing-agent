@@ -16,7 +16,7 @@ class GameState:
         None
         """
         # Create an empty board
-        self.board = [[0, 0], [0, 0], [0, 0], [0, 0]]
+        self.board = [[0, 0], [0, 0], [0, 0]]
         # 0 | 0 | 0
         # 0 | 0 | 0
         # Fill in lower right corner because ... why not
@@ -46,46 +46,54 @@ class GameState:
 
 
     def horizontal_moves(self, moves, player_location):
-        hor = []
+        hor_right = []
+        hor_left = []
         pos = player_location
+        new_moves = []
         # Set new array of horizontal available boxes
-        for i in moves:
-            if(i[1]==pos[1]):
-                hor.append(i)
-
+        for move in moves:
+            if(move[1]==pos[1]):
+                if(move[0] > pos[0]):
+                    hor_right.append(move)
+                else:
+                    hor_left.append(move)
         # Remove available box if prior box (in between current box and original
         # position) is blocked
-        for i, x in enumerate(hor):
-            print(x)
-            print(pos)
-            #if(x[0] != 0): # may not be required
-            # If current box is to the right of player's position
-            if(x[0] > pos[0]):
-                """
-                If index of the current box minus the index of the prev box
-                is greater than one it means there was a blocked box in
-                between
-                """
-                print(hor)
-                print(i)
-                print(hor[i+1][0] - x[0])
-                # Not immediately after current position
-                """
-                if((x[0] - pos[0]) != 1):
-                    if((x[0] - hor[i+1][0]) > 1):
-                        hor.remove(x)
-                        moves.remove(x)
-                """
-            # If current box is to the left of player's position
-            elif(x[0] < pos[0]):
-                # While it's not the box exactly to the right of the
-                # player's position
-                if((x[0] - pos[0]) != 1):
-                    if((hor[i-1][0] - x[0]) > 1):
-                        hor.remove(x)
+        for i, x in enumerate(hor_right):
+            if(i == 0):
+                # Right immediate box is blocked
+                if(x[0] - pos[0] != 1):
+                    moves = [n for n in moves if n not in hor_right]
+                    break
+            else:
+                # If we reach the last element than we be cool
+                if(i != len(hor_right)):
+                    """
+                    If index of the current box minus the index of the prev box
+                    is greater than one it means there was a blocked box in
+                    between
+                    """
+                    if((hor_right[i+1][0] - x[0]) > 1):
+                        hor_right.remove(x)
                         moves.remove(x)
 
-        import code; code.interact(local=dict(globals(), **locals()))
+        for i, x in enumerate(hor_left):
+            if(i == 0):
+                # Left immediate box is blocked
+                if(pos[0] - x[0] != 1):
+                    moves = [n for n in moves if n not in hor_left]
+                    break
+            else:
+                # If we reach the last element than we be cool
+                if(i != len(hor_left)):
+                    """
+                    If index of the current box minus the index of the prev box
+                    is greater than one it means there was a blocked box in
+                    between
+                    """
+                    if((x[0] - hor_left[i-1][0]) > 1):
+                        hor_left.remove(x)
+                        moves.remove(x)
         return moves
 
 
@@ -112,12 +120,9 @@ class GameState:
                 # Check if available
                 if(nu == 0):
                     moves.append((i, ix))
-        # If first move
+        # If not the first move
         if(len(player_location) != 0):
             moves = self.horizontal_moves(moves, player_location)
-
-            # When applying vertical and diagonal check we only need to
-            # keep removing the bloked boxes from moves
 
         return moves
 
@@ -133,8 +138,8 @@ class GameState:
             (e.g., (0, 0) if the active player will move to the
             top-left corner of the board)
         """
-        #if move not in self.get_legal_moves():
-        #    raise RuntimeError("Attempted forecast of illegal move")
+        if move not in self.get_legal_moves():
+            raise RuntimeError("Attempted forecast of illegal move")
         new_state = deepcopy(self)
         new_state.board[move[0]][move[1]] = 1
         new_state.update_player_position(move)
@@ -150,7 +155,6 @@ class GameState:
         for i, n in enumerate(self.board):
             for ix, nu in enumerate(n):
                 print("(" + str(i) + ", " + str(ix) + ") = " + str(nu))
-
 
 
 if __name__ == "__main__":

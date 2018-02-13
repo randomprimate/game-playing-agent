@@ -26,5 +26,3 @@ if (2, 0) in set(p1_empty_moves_g2):
           "player 2 moved to (1, 0).")
 else:
     print("Everything looks good!")
-
-import code; code.interact(local=dict(globals(), **locals()))

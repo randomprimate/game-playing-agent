@@ -7,6 +7,7 @@ rows = 2
 columns = 3
 elements = [0] * columns
 
+
 class GameState:
 
     def __init__(self):
@@ -30,14 +31,13 @@ class GameState:
         }
 
     def update_player_position(self, move):
-        if(self.player_state["player_1"][0] == 1):
+        if self.player_state["player_1"][0] == 1:
             self.player_state["player_1"][1] = move
         else:
             self.player_state["player_2"][1] = move
 
-
     def switch_turn(self):
-        if(self.player_state["player_1"][0] == 1):
+        if self.player_state["player_1"][0] == 1:
             self.player_state["player_1"][0] = 0
             self.player_state["player_2"][0] = 1
         else:
@@ -49,7 +49,7 @@ class GameState:
         for i, n in enumerate(self.board):
             for ix, nu in enumerate(n):
                 # Check if available
-                if(nu == 0):
+                if nu == 0:
                     moves.append((i, ix))
         return moves
 
@@ -65,18 +65,17 @@ class GameState:
         the zero-indexed coordinates on the board.
         """
         moves = []
-        if(self.player_state["player_1"][0] == 1):
+        if self.player_state["player_1"][0] == 1:
             player_location = self.player_state["player_1"][1]
         else:
             player_location = self.player_state["player_2"][1]
 
-        if(len(player_location) == 0):
+        if len(player_location) == 0:
             moves = self.first_move()
         else:
             moves = ah.index_available_matrix_elements(columns, self.board, player_location)
 
         return moves
-
 
     def forecast_move(self, move):
         """ Return a new board object with the specified move
@@ -97,7 +96,6 @@ class GameState:
         new_state.switch_turn()
 
         return new_state
-
 
     def print_coordinates(self):
         """ Print the coordinates of the board

@@ -32,3 +32,8 @@ just like `binding.pry` in Ruby.
 ```
 import code; code.interact(local=dict(globals(), **locals()))
 ```
+
+## Install
+
+* Python 3
+* No dependencies

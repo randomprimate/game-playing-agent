@@ -1,7 +1,19 @@
+import minimax_helpers
 from gamestate import *
 
 print("Creating empty game board...")
 g = GameState()
+
+print("Calling min_value on an empty board...")
+v = minimax_helpers.min_value(g)
+
+if v == -1:
+    print("min_value() returned the expected score!")
+else:
+    print("Uh oh! min_value() did not return the expected score.")
+
+
+import code; code.interact(local=dict(globals(), **locals()))
 
 print("Getting legal moves for player 1...")
 p1_empty_moves = g.get_legal_moves()

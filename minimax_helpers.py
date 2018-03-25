@@ -14,7 +14,6 @@ def min_value(gameState):
     if terminal_test(gameState):
         return 1
     v = float("inf")
-
     # Values for all moves from the current level
     for m in gameState.get_legal_moves():
         v = min(v, max_value(gameState.forecast_move(m)))

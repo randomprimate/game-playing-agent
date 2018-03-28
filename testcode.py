@@ -4,13 +4,14 @@ from gamestate import *
 
 print("\nCreating empty game board...")
 g = GameState()
+depth_limit = 1
 
 """
  Testing minimax_helpers
 """
 print("\nTesting minimax_helpers:")
 print("- Calling min_value on an empty board...")
-v = minimax_helpers.min_value(g)
+v = minimax_helpers.min_value(g, depth_limit)
 
 if v == -1:
     print("OK: min_value() returned the expected score!\n")
@@ -49,12 +50,30 @@ print("Testing Minimax Algorithm:")
 
 best_moves = {(0, 0), (2, 0), (0, 1)}
 rootNode = GameState()
-minimax_move = minimax.minimax_decision(rootNode)
+minimax_move = minimax.minimax_decision(rootNode, depth_limit)
 
 print("- Best move choices: {}".format(list(best_moves)))
 print("- Your code chose: {}".format(minimax_move))
 
 if minimax_move in best_moves:
     print("OK: That's one of the best move choices. Looks like your minimax-decision function worked!\n")
+else:
+    print("ERR: Uh oh...looks like there may be a problem.\n")
+
+"""
+ Test Depth Limited Search
+"""
+print("Testing Depth Limited Search:")
+
+expected_node_count = 5
+import code;
+
+code.interact(local=dict(globals(), **locals()))
+
+print("- Expected node count: {}".format(expected_node_count))
+print("- Your node count: {}".format(minimax.call_counter))
+
+if minimax.call_counter == expected_node_count:
+    print("OK: That's right! Looks like your depth limit is working!\n")
 else:
     print("ERR: Uh oh...looks like there may be a problem.\n")

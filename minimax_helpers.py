@@ -1,14 +1,11 @@
-call_counter = 0
-
-# scope error
+import settings
 
 def terminal_test(gameState):
     """ Return True if the game is over for the active player
     and False otherwise.
     """
-    global call_counter
-    call_counter += 1
-    moves_available = bool(gameState.get_legal_moves())  # by Assumption 1
+    settings.call_counter += 1
+    moves_available = bool(gameState.get_legal_moves())
 
     return not moves_available
 
@@ -18,6 +15,8 @@ def min_value(gameState, depth):
     otherwise return the minimum value over all legal child
     nodes.
     """
+    #import code;code.interact(local=dict(globals(), **locals()))
+
     if terminal_test(gameState):
         return 1
 
@@ -47,4 +46,3 @@ def max_value(gameState, depth):
     for m in gameState.get_legal_moves():
         v = max(v, min_value(gameState.forecast_move(m), depth - 1))
     return v
-

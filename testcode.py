@@ -1,10 +1,12 @@
+import settings
 import minimax_helpers
 import minimax
 from gamestate import *
 
 print("\nCreating empty game board...")
 g = GameState()
-depth_limit = 1
+depth_limit = 5
+settings.init()
 
 """
  Testing minimax_helpers
@@ -64,16 +66,16 @@ else:
  Test Depth Limited Search
 """
 print("Testing Depth Limited Search:")
-
+depth_limit = 1
 expected_node_count = 5
-import code;
-
-code.interact(local=dict(globals(), **locals()))
+settings.init()
+rootNode = GameState()
+_ = minimax.minimax_decision(rootNode, depth_limit)
 
 print("- Expected node count: {}".format(expected_node_count))
-print("- Your node count: {}".format(minimax.call_counter))
+print("- Your node count: {}".format(settings.call_counter))
 
-if minimax.call_counter == expected_node_count:
+if settings.call_counter == expected_node_count:
     print("OK: That's right! Looks like your depth limit is working!\n")
 else:
     print("ERR: Uh oh...looks like there may be a problem.\n")
